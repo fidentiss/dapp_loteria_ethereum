@@ -165,7 +165,7 @@ async function updateUI() {
 			parseFloat(balanceEth).toFixed(4);
 
 		mostrarParticipantes();
-		mostrarCostoParticipacion();
+		escucharEventos();
 	}
 }
 
@@ -210,17 +210,6 @@ document.getElementById("participar").addEventListener("click", async () => {
         console.error("Error al participar:", error);
     }
 });
-
-
-async function mostrarCostoParticipacion() {
-	try {
-		const costoWei = await contratoLoteria.methods.entrada().call();
-		const costoEth = web3.utils.fromWei(costoWei, "ether");
-		document.getElementById("costo").innerText = costoEth + " ETH";
-	} catch (error) {
-		console.error("Error al obtener el costo de participación:", error);
-	}
-}
 
 async function mostrarParticipantes() {
 	try {
