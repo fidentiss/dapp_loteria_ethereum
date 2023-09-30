@@ -15,11 +15,36 @@
             <h1>¡Bienvenido a la Lotería DApp!</h1>
         </header>
         <main>
+            <section id="costoParticipacion">
+                <h2><i class="fas fa-ticket-alt"></i> Costo de Participación</h2>
+                <p id="costo">0.003 ETH</p>
+            </section>
             <button id="participar"><i class="fas fa-dice"></i> Participar</button>
+            <section id="participantesActuales">
+                <h2><i class="fas fa-users"></i> Participantes Actuales</h2>
+                <ul id="listaParticipantes"></ul>
+            </section>
+            
             <section id="ganadores">
                 <h2><i class="fas fa-star"></i> Últimos ganadores</h2>
                 <ul id="listaGanadores"></ul>
             </section>
+            <section id="comoJugar">
+                <h2><i class="fas fa-question-circle"></i> Cómo se juega</h2>
+                <p>
+                    Para participar en la lotería, conecta tu wallet y envía 0.003 ETH haciendo clic en el botón "Participar". Una vez alcanzado el número máximo de jugadores, se seleccionará un ganador al azar y se le otorgará el premio acumulado.
+                </p>
+            </section>
+
+            <section id="reglas">
+                <h2><i class="fas fa-book"></i> Reglas del juego</h2>
+                <ul>
+                    <li>El costo de entrada es de 0.003 ETH por jugador.</li>
+                    <li>El número máximo de jugadores es 10. Si se alcanza este límite, los jugadores adicionales entrarán en una cola y participarán en la siguiente ronda.</li>
+                    <li>El premio se otorga al ganador seleccionado al azar, que recibirá el 85% del pozo acumulado. El 15% restante se reserva para la plataforma.</li>
+                </ul>
+            </section>
+            
         </main>
     </div>
     <div class="wallet-info">

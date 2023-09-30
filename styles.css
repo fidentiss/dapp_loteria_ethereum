@@ -136,3 +136,35 @@ h2 i {
 .wallet-info button:hover {
  background-color: #43a047;
 }
+
+#participantesActuales {
+    margin-top: 40px;
+    background-color: #2e2e2e; /* Un tono ligeramente más claro que el fondo principal para destacar la sección */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#participantesActuales h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #ffc107; /* Usando el mismo color que los otros íconos para mantener la consistencia */
+}
+
+#participantesActuales ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#participantesActuales ul li {
+    padding: 10px;
+    border: 1px solid #4caf50; /* Un color verde para diferenciar de los ganadores */
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+#participantesActuales h2 i {
+    margin-right: 10px;
+    color: #4caf50; /* Un color verde para el ícono de los usuarios */
+    animation: bounce 1s infinite;
+}
