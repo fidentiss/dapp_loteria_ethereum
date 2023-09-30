@@ -241,20 +241,32 @@ async function mostrarParticipantes() {
 }
 
 function escucharEventos() {
-	contratoLoteria.events.Ganador({}, (error, event) => {
-		if (error) {
-			console.error("Error en evento Ganador:", error);
-			return;
-		}
-		// Aquí puedes agregar el ganador a la lista "listaGanadores"
-		// o cualquier otra acción que desees hacer al escuchar este evento.
-		const ganador = event.returnValues.ganador;
-		const monto = web3.utils.fromWei(event.returnValues.monto, "ether");
+    // Suscripción al evento Ganador
+    contratoLoteria.events.Ganador({}, (error, event) => {
+        if (error) {
+            console.error("Error en evento Ganador:", error);
+            return;
+        }
+        // Aquí puedes agregar el ganador a la lista "listaGanadores"
+        // o cualquier otra acción que desees hacer al escuchar este evento.
+        const ganador = event.returnValues.ganador;
+        const monto = web3.utils.fromWei(event.returnValues.monto, "ether");
 
-		const li = document.createElement("li");
-		li.textContent = `${ganador} ganó ${monto} ETH`;
-		document.getElementById("listaGanadores").appendChild(li);
-	});
+        const li = document.createElement("li");
+        li.textContent = `${ganador} ganó ${monto} ETH`;
+        document.getElementById("listaGanadores").appendChild(li);
+    });
 
-	// Agrega escuchas para otros eventos si es necesario.
+    // Suscripción al evento NuevoJugador
+    contratoLoteria.events.NuevoJugador({}, async (error, event) => {
+        if (error) {
+            console.error('Error en evento NuevoJugador:', error);
+            return;
+        }
+        // Actualiza la lista de participantes cuando se dispara el evento NuevoJugador
+        await mostrarParticipantes();
+    });
+
+    // Agrega escuchas para otros eventos si es necesario.
 }
+
