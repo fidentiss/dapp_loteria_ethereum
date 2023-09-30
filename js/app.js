@@ -186,29 +186,29 @@ document.getElementById("connectWallet").addEventListener("click", async () => {
 });
 
 document.getElementById("participar").addEventListener("click", async () => {
-    if (!selectedAccount) {
-        // Solicita la conexión de la wallet si no está conectada
-        try {
-            const accounts = await window.ethereum.request({
-                method: "eth_requestAccounts",
-            });
-            selectedAccount = accounts[0];
-            updateUI();  // Actualiza la UI con la información de la wallet
-        } catch (error) {
-            console.error("Usuario rechazó la conexión");
-            return;  // Termina la función si el usuario rechaza la conexión
-        }
-    }
+	if (!selectedAccount) {
+		// Solicita la conexión de la wallet si no está conectada
+		try {
+			const accounts = await window.ethereum.request({
+				method: "eth_requestAccounts",
+			});
+			selectedAccount = accounts[0];
+			updateUI(); // Actualiza la UI con la información de la wallet
+		} catch (error) {
+			console.error("Usuario rechazó la conexión");
+			return; // Termina la función si el usuario rechaza la conexión
+		}
+	}
 
-    const valorEnWei = web3.utils.toWei("0.003", "ether");  // Asumiendo 0.003 ether como costo
-    try {
-        await contratoLoteria.methods
-            .participar()
-            .send({ from: selectedAccount, value: valorEnWei });
-        updateUI();  // Actualiza la UI después de participar
-    } catch (error) {
-        console.error("Error al participar:", error);
-    }
+	const valorEnWei = web3.utils.toWei("0.003", "ether"); // Asumiendo 0.003 ether como costo
+	try {
+		await contratoLoteria.methods
+			.participar()
+			.send({ from: selectedAccount, value: valorEnWei });
+		updateUI(); // Actualiza la UI después de participar
+	} catch (error) {
+		console.error("Error al participar:", error);
+	}
 });
 
 async function mostrarParticipantes() {
@@ -224,38 +224,53 @@ async function mostrarParticipantes() {
 			li.textContent = participante;
 			listaParticipantes.appendChild(li);
 		});
+
+		// Llamada a actualizarJugadoresFaltantes
+		actualizarJugadoresFaltantes();
 	} catch (error) {
 		console.error("Error al obtener los participantes:", error);
 	}
 }
 
-function escucharEventos() {
-    // Suscripción al evento Ganador
-    contratoLoteria.events.Ganador({}, (error, event) => {
-        if (error) {
-            console.error("Error en evento Ganador:", error);
-            return;
-        }
-        // Aquí puedes agregar el ganador a la lista "listaGanadores"
-        // o cualquier otra acción que desees hacer al escuchar este evento.
-        const ganador = event.returnValues.ganador;
-        const monto = web3.utils.fromWei(event.returnValues.monto, "ether");
-
-        const li = document.createElement("li");
-        li.textContent = `${ganador} ganó ${monto} ETH`;
-        document.getElementById("listaGanadores").appendChild(li);
-    });
-
-    // Suscripción al evento NuevoJugador
-    contratoLoteria.events.NuevoJugador({}, async (error, event) => {
-        if (error) {
-            console.error('Error en evento NuevoJugador:', error);
-            return;
-        }
-        // Actualiza la lista de participantes cuando se dispara el evento NuevoJugador
-        await mostrarParticipantes();
-    });
-
-    // Agrega escuchas para otros eventos si es necesario.
+async function actualizarJugadoresFaltantes() {
+	try {
+		const maxJugadores = await contratoLoteria.methods.maxJugadores().call();
+		const jugadoresActuales = await contratoLoteria.methods
+			.obtenerJugadoresActuales()
+			.call();
+		const jugadoresFaltantes = maxJugadores - jugadoresActuales.length;
+		document.getElementById("jugadoresFaltantes").textContent = "Faltan " + jugadoresFaltantes + " jugadores";
+	} catch (error) {
+		console.error("Error al actualizar jugadores faltantes:", error);
+	}
 }
 
+function escucharEventos() {
+	// Suscripción al evento Ganador
+	contratoLoteria.events.Ganador({}, (error, event) => {
+		if (error) {
+			console.error("Error en evento Ganador:", error);
+			return;
+		}
+		// Aquí puedes agregar el ganador a la lista "listaGanadores"
+		// o cualquier otra acción que desees hacer al escuchar este evento.
+		const ganador = event.returnValues.ganador;
+		const monto = web3.utils.fromWei(event.returnValues.monto, "ether");
+
+		const li = document.createElement("li");
+		li.textContent = `${ganador} ganó ${monto} ETH`;
+		document.getElementById("listaGanadores").appendChild(li);
+	});
+
+	// Suscripción al evento NuevoJugador
+	contratoLoteria.events.NuevoJugador({}, async (error, event) => {
+		if (error) {
+			console.error("Error en evento NuevoJugador:", error);
+			return;
+		}
+		// Actualiza la lista de participantes cuando se dispara el evento NuevoJugador
+		await mostrarParticipantes();
+	});
+
+	// Agrega escuchas para otros eventos si es necesario.
+}
