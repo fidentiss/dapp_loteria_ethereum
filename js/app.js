@@ -239,7 +239,8 @@ async function actualizarJugadoresFaltantes() {
 			.obtenerJugadoresActuales()
 			.call();
 		const jugadoresFaltantes = maxJugadores - jugadoresActuales.length;
-		document.getElementById("jugadoresFaltantes").textContent = "Faltan " + jugadoresFaltantes + " jugadores";
+		document.getElementById("jugadoresFaltantes").textContent =
+			"Faltan " + jugadoresFaltantes + " jugadores";
 	} catch (error) {
 		console.error("Error al actualizar jugadores faltantes:", error);
 	}
