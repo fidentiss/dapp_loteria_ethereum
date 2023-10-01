@@ -168,3 +168,35 @@ h2 i {
     color: #4caf50; /* Un color verde para el ícono de los usuarios */
     animation: bounce 1s infinite;
 }
+
+#transactionStatus {
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo negro con un poco de transparencia */
+    color: #f5f5f5; /* Texto blanco */
+    border: 1px solid #d32f2f; /* Borde rojo para destacar el mensaje */
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Hace que el mensaje se muestre por encima de otros elementos */
+    top: 10%; /* Posición desde la parte superior */
+    left: 50%; /* Centra el mensaje horizontalmente */
+    transform: translateX(-50%); /* Ajuste para centrar el mensaje */
+    z-index: 1000; /* Asegura que el mensaje esté en la capa superior */
+    max-width: 80%; /* Ajusta el ancho máximo del mensaje */
+    text-align: center; /* Centra el texto dentro del mensaje */
+}
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+}
+
+footer a {
+    margin: 0 10px;
+    color: #f5f5f5; /* Color blanco, pero puedes cambiarlo según tu diseño */
+    font-size: 24px; /* Tamaño de los íconos, ajústalo según tus necesidades */
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: #d32f2f; /* Cambia el color al pasar el ratón por encima */
+}
