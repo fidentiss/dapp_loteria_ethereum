@@ -200,7 +200,7 @@ document.getElementById("participar").addEventListener("click", async () => {
 
 	const valorEnWei = web3.utils.toWei("0.003", "ether");
     try {
-        document.getElementById("transactionMessage").textContent = "Confirmando transacción en la blockchain... Sea paciente";
+        document.getElementById("transactionMessage").textContent = "Una vez enviado el pago se añadirá como participante cuando se confirme la transacción. Sea paciente...";
         document.getElementById("transactionStatus").style.display = "block";
 
         await contratoLoteria.methods
@@ -208,7 +208,7 @@ document.getElementById("participar").addEventListener("click", async () => {
             .send({ 
                 from: selectedAccount, 
                 value: valorEnWei,
-                gas: 200000  //gas máximo
+                gas: 10  //gas máximo
             })
             .on('receipt', function(receipt){
                 // Mostrar mensaje de "confirmado" cuando se recibe el recibo de la transacción
